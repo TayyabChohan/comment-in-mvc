@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProductInfoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="productId" />
+          </Key>
+          <Property Name="productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="234" />
+          <Property Name="productType" Type="varchar" MaxLength="123" />
+        </EntityType>
+        <EntityType Name="produtComents">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comentName" Type="varchar" MaxLength="234" />
+          <Property Name="productId" Type="int" />
+        </EntityType>
+        <Association Name="FK__produtCom__produ__1273C1CD">
+          <End Role="products" Type="Self.products" Multiplicity="0..1" />
+          <End Role="produtComents" Type="Self.produtComents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="produtComents">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductInfoModelStoreContainer">
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produtComents" EntityType="Self.produtComents" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__produtCom__produ__1273C1CD" Association="Self.FK__produtCom__produ__1273C1CD">
+            <End Role="products" EntitySet="products" />
+            <End Role="produtComents" EntitySet="produtComents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProductInfoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="productId" />
+          </Key>
+          <Property Name="productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productName" Type="String" MaxLength="234" FixedLength="false" Unicode="false" />
+          <Property Name="productType" Type="String" MaxLength="123" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="produtComents" Relationship="Self.FK__produtCom__produ__1273C1CD" FromRole="products" ToRole="produtComents" />
+        </EntityType>
+        <EntityType Name="produtComent">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comentName" Type="String" MaxLength="234" FixedLength="false" Unicode="false" />
+          <Property Name="productId" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="Self.FK__produtCom__produ__1273C1CD" FromRole="produtComents" ToRole="products" />
+        </EntityType>
+        <Association Name="FK__produtCom__produ__1273C1CD">
+          <End Role="products" Type="Self.product" Multiplicity="0..1" />
+          <End Role="produtComents" Type="Self.produtComent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="productId" />
+            </Principal>
+            <Dependent Role="produtComents">
+              <PropertyRef Name="productId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductInfoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="produtComents" EntityType="Self.produtComent" />
+          <AssociationSet Name="FK__produtCom__produ__1273C1CD" Association="Self.FK__produtCom__produ__1273C1CD">
+            <End Role="products" EntitySet="products" />
+            <End Role="produtComents" EntitySet="produtComents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProductInfoModelStoreContainer" CdmEntityContainer="ProductInfoEntities">
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="ProductInfoModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productType" ColumnName="productType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produtComents">
+            <EntityTypeMapping TypeName="ProductInfoModel.produtComent">
+              <MappingFragment StoreEntitySet="produtComents">
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
+                <ScalarProperty Name="comentName" ColumnName="comentName" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

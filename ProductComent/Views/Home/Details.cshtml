@@ -1,0 +1,57 @@
+﻿@model ProductComent.Models.product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+    <div>
+        <h4>product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.productName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.productName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.productType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.productType)
+            </dd>
+            <dd>
+                @Html.TextArea("Description", null, new { @class = "form-control" })
+
+            </dd>
+            <dd>
+                <a href="~/Home/CommentPost" type="button" class="btn btn-primary ">Comment</a>
+            </dd>
+
+        </dl>
+    </div>
+
+<div>
+
+
+    @using(Html.BeginForm("CommentPost", "Home", FormMethod.Post))
+    {
+        @Html.HiddenFor(a=>a.productId)
+        <input type="text" name="coments" class="form-control" />
+
+        <input type="submit" value="Add" class="btn btn-danger" />
+    }
+</div>
+
+
+
+@{
+Html.RenderAction("Coments", "Home", new { id = Model.productId });
+
+}
